@@ -25,8 +25,18 @@ public class ArticuloService implements IArticuloService {
     }
 
     @Override
+    public List<Articulo> guardarTodas(List<Articulo> articulos) {
+        return this.repository.saveAll(articulos);
+    }
+
+    @Override
     public void eliminar(int id) {
         this.repository.deleteById(id);
+    }
+
+    @Override
+    public List<Articulo> buscarNombre(String nombre){
+        return this.repository.findByNombreContaining(nombre);
     }
 
 }

@@ -3,6 +3,8 @@ package core.dev.bambam.controller;
 import core.dev.bambam.entity.Categoria;
 import core.dev.bambam.service.ICategoriaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,14 +18,24 @@ public class CategoriaController {
     private ICategoriaService service;
 
     @GetMapping("/categorias")
-    public List<Categoria> listar(){
+    private List<Categoria> listar(){
         return this.service.buscarTodo();
+    }
+
+    @GetMapping("/categorias/{id}")
+    public ResponseEntity<Categoria> obtenerPorId(@PathVariable("id") int id){
+        return new ResponseEntity<>(this.service.obtener(id), HttpStatus.OK);
     }
 
     @PostMapping("/categorias")
     private Categoria guardar(@RequestBody Categoria categoria){
         categoria.setEstado(1);
         return this.service.guardar(categoria);
+    }
+
+    @PostMapping("/categorias/saveall")
+    private List<Categoria> guardarVarias(@RequestBody List<Categoria> categorias){
+        return this.service.guardarTodas(categorias);
     }
 
     @PutMapping("/categorias")

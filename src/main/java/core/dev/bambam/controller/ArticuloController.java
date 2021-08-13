@@ -1,6 +1,8 @@
 package core.dev.bambam.controller;
 
 import core.dev.bambam.entity.Articulo;
+import core.dev.bambam.entity.Cliente;
+import core.dev.bambam.entity.DetallesCliente;
 import core.dev.bambam.service.IArticuloService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -27,6 +29,11 @@ public class ArticuloController {
         return this.service.guardar(articulo);
     }
 
+    @PostMapping("/articulos/create")
+    private List<Articulo> guardarTodas(@RequestBody List<Articulo> articulos){
+        return this.service.guardarTodas(articulos);
+    }
+
     @PutMapping("/articulos")
     private Articulo modificar(@RequestBody Articulo articulo){
         return this.service.guardar(articulo);
@@ -36,4 +43,10 @@ public class ArticuloController {
     private void borrar(@PathVariable("id") int id){
         this.service.eliminar(id);
     }
+
+    @GetMapping("/articulos/search/{nombre}")
+    private List<Articulo> buscarPorNombre(@PathVariable("nombre") String nombre){
+        return this.service.buscarNombre(nombre);
+    }
+
 }

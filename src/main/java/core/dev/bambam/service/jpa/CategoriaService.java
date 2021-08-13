@@ -20,8 +20,18 @@ public class CategoriaService implements ICategoriaService {
     }
 
     @Override
+    public Categoria obtener(int id) {
+        return this.repository.findById(id).orElse(null);
+    }
+
+    @Override
     public Categoria guardar(Categoria articulo) {
         return this.repository.save(articulo);
+    }
+
+    @Override
+    public List<Categoria> guardarTodas(List<Categoria> articulos) {
+        return this.repository.saveAll(articulos);
     }
 
     @Override

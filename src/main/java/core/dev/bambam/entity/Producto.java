@@ -12,7 +12,7 @@ import java.util.List;
 @Data
 @Entity
 @Table(name = "productos")
-public class Producto {
+public class Producto{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -34,9 +34,16 @@ public class Producto {
                 inverseJoinColumns = @JoinColumn(name = "idarticulo"))
     private List<Articulo> articulos;
 
-    @ManyToOne
+    @ManyToOne()
     @JoinColumn(name = "idcategoria", nullable=false)
     private Categoria categoria;
+
+    @CreationTimestamp
+    @Column(updatable = false)
+    private Timestamp date_created;
+
+    @UpdateTimestamp
+    private Timestamp last_modified;
 
     public void agregar(Articulo articulo){
         if (this.articulos == null){
@@ -44,13 +51,6 @@ public class Producto {
         }
         this.articulos.add(articulo);
     }
-
-    @CreationTimestamp
-    @Column(updatable = false)
-    private Timestamp dateCreated;
-
-    @UpdateTimestamp
-    private Timestamp lastModified;
 }
 
 
