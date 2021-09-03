@@ -1,5 +1,6 @@
 package core.dev.bambam.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -44,6 +45,11 @@ public class Producto{
 
     @UpdateTimestamp
     private Timestamp last_modified;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "producto")
+    private List<VentaProducto> ventaProductos;
+
 
     public void agregar(Articulo articulo){
         if (this.articulos == null){

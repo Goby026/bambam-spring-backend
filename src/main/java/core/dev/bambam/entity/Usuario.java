@@ -1,31 +1,37 @@
 package core.dev.bambam.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.List;
 
 @Data
 @Entity
-@Table(name = "categorias")
-public class Categoria{
+@Table(name = "users")
+public class Usuario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private String nombre;
-    private String  descripcion;
-    private int  estado;
+    @Column(length = 30, unique = true)
+    private String username;
 
-    @JsonIgnore
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "categoria")
-    private List<Producto> productos;
+    @Column(length = 60)
+    private String password;
+
+    private Boolean enabled;
+
+//    @JsonIgnore
+//    @OneToMany(mappedBy = "usuario")
+//    private List<UsuarioPerfil> usuarioPerfiles;
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
+    private List<Role> roles;
 
     @CreationTimestamp
     @Column(updatable = false)

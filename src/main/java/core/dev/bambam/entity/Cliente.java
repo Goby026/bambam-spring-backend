@@ -1,5 +1,6 @@
 package core.dev.bambam.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -26,11 +27,8 @@ public class Cliente {
     @JoinColumn(name = "id")
     private DetallesCliente detalles;
 
-    @OneToMany(mappedBy = "cliente",
-            cascade = {CascadeType.PERSIST,
-                    CascadeType.MERGE,
-                    CascadeType.DETACH,
-                    CascadeType.REFRESH})
+    @JsonIgnore
+    @OneToMany(mappedBy = "cliente")
     private List<Pedido> pedidos;
 
     private void addPedido(Pedido pedido){

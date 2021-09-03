@@ -6,26 +6,28 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 @Data
 @Entity
-@Table(name = "categorias")
-public class Categoria{
+@Table(name = "ventas")
+public class Venta {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private String nombre;
-    private String  descripcion;
-    private int  estado;
+    @Temporal(TemporalType.DATE)
+    private Date fechaVenta;
 
-    @JsonIgnore
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "categoria")
-    private List<Producto> productos;
+    private String moneda;
+    private String sucursal;
+    private String cliente;
+
+    private int userId;
+    private int estado;
 
     @CreationTimestamp
     @Column(updatable = false)
@@ -33,4 +35,10 @@ public class Categoria{
 
     @UpdateTimestamp
     private Timestamp last_modified;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "venta")
+    private List<VentaProducto> ventaProductos;
+
+
 }
